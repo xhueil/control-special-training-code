@@ -1,0 +1,181 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/17/2017  09:53:46  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL_V4\C51\BIN\BL51.EXE STARTUP.obj, External_interrupts_level_trigger.obj TO External_interrupts_level_trigger RAMS
+>> IZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  STARTUP.obj (?C_STARTUP)
+  External_interrupts_level_trigger.obj (EXTERNAL_INTERRUPTS_LEVEL_TRIGGER)
+
+
+LINK MAP OF MODULE:  External_interrupts_level_trigger (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0001H     UNIT         _DATA_GROUP_
+            IDATA   0009H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0003H     ABSOLUTE     
+            CODE    0006H     004CH     UNIT         ?PR?EXTERNALINTERRUPT0HANDLER?EXTERNAL_INTERRUPTS_LEVEL_TRIGGER
+            CODE    0052H     0031H     UNIT         ?PR?MAIN?EXTERNAL_INTERRUPTS_LEVEL_TRIGGER
+            CODE    0083H     001EH     UNIT         ?PR?_DELAYMS?EXTERNAL_INTERRUPTS_LEVEL_TRIGGER
+            CODE    00A1H     000CH     UNIT         ?C_C51STARTUP
+            CODE    00ADH     000AH     UNIT         ?CO?EXTERNAL_INTERRUPTS_LEVEL_TRIGGER
+            CODE    00B7H     0007H     UNIT         ?PR?EXTERNALINTERRUPT0INIT?EXTERNAL_INTERRUPTS_LEVEL_TRIGGER
+
+
+
+OVERLAY MAP OF MODULE:   External_interrupts_level_trigger (?C_STARTUP)
+
+
+SEGMENT                                            DATA_GROUP 
+  +--> CALLED SEGMENT                            START    LENGTH
+----------------------------------------------------------------
+?C_C51STARTUP                                    -----    -----
+  +--> ?PR?MAIN?EXTERNAL_INTERRUPTS_LEVEL_TR...
+
+?PR?MAIN?EXTERNAL_INTERRUPTS_LEVEL_TR...         0008H    0001H
+  +--> ?PR?EXTERNALINTERRUPT0INIT?EXTERNAL_I...
+  +--> ?CO?EXTERNAL_INTERRUPTS_LEVEL_TRIGGER
+  +--> ?PR?_DELAYMS?EXTERNAL_INTERRUPTS_LEVE...
+
+*** NEW ROOT ***************************************************
+
+?PR?EXTERNALINTERRUPT0HANDLER?EXTERNA...         -----    -----
+  +--> ?PR?_DELAYMS?EXTERNAL_INTERRUPTS_LEVE...
+
+
+
+SYMBOL TABLE OF MODULE:  External_interrupts_level_trigger (?C_STARTUP)
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/17/2017  09:53:46  PAGE 2
+
+
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:00A1H         SEGMENT       ?C_C51STARTUP
+  I:0009H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:00A4H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:00A1H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:00A1H         LINE#         133
+  C:00A3H         LINE#         134
+  C:00A4H         LINE#         135
+  C:00A5H         LINE#         136
+  C:00A7H         LINE#         185
+  C:00AAH         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        EXTERNAL_INTERRUPTS_LEVEL_TRIGGER
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  C:00B7H         PUBLIC        externalInterrupt0Init
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  C:00ADH         PUBLIC        GlobalDisplayTable
+  B:00A0H.6       PUBLIC        DULA_IO
+  B:00A0H.7       PUBLIC        WELA_IO
+  C:0052H         PUBLIC        main
+  C:0006H         PUBLIC        externalInterrupt0Handler
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/17/2017  09:53:46  PAGE 3
+
+
+  C:0083H         PUBLIC        _delayMs
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  -------         DO            
+  D:0008H         SYMBOL        num
+  -------         ENDDO         
+  C:0052H         LINE#         46
+  C:0052H         LINE#         47
+  C:0052H         LINE#         49
+  C:0055H         LINE#         51
+  C:0055H         LINE#         52
+  C:0055H         LINE#         53
+  C:0058H         LINE#         54
+  C:0058H         LINE#         55
+  C:005AH         LINE#         56
+  C:0062H         LINE#         57
+  C:0064H         LINE#         59
+  C:0067H         LINE#         60
+  C:0069H         LINE#         62
+  C:006CH         LINE#         63
+  C:006EH         LINE#         65
+  C:0071H         LINE#         67
+  C:0078H         LINE#         68
+  -------         ENDPROC       MAIN
+  -------         PROC          EXTERNALINTERRUPT0HANDLER
+  C:0006H         LINE#         81
+  C:0023H         LINE#         83
+  C:0026H         LINE#         84
+  C:002DH         LINE#         85
+  C:0030H         LINE#         86
+  C:0037H         LINE#         87
+  -------         ENDPROC       EXTERNALINTERRUPT0HANDLER
+  -------         PROC          _DELAYMS
+  D:0006H         SYMBOL        xms
+  -------         DO            
+  D:0006H         SYMBOL        x
+  D:0004H         SYMBOL        y
+  -------         ENDDO         
+  C:0083H         LINE#         98
+  C:0083H         LINE#         99
+  C:0083H         LINE#         101
+  C:008CH         LINE#         102
+  C:00A0H         LINE#         103
+  -------         ENDPROC       _DELAYMS
+  -------         PROC          EXTERNALINTERRUPT0INIT
+  C:00B7H         LINE#         114
+  C:00B7H         LINE#         115
+  C:00B7H         LINE#         116
+  C:00B9H         LINE#         117
+  C:00BBH         LINE#         118
+  C:00BDH         LINE#         119
+  -------         ENDPROC       EXTERNALINTERRUPT0INIT
+  -------         ENDMOD        EXTERNAL_INTERRUPTS_LEVEL_TRIGGER
+
+Program Size: data=10.0 xdata=0 code=190
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
