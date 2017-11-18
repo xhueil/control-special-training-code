@@ -186,10 +186,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>19</ColumnNumber>
+      <ColumnNumber>17</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>1</TopLine>
-      <CurrentLine>15</CurrentLine>
+      <CurrentLine>1</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\External_interrupts_level_trigger.c</PathWithFileName>
       <FilenameWithoutPath>External_interrupts_level_trigger.c</FilenameWithoutPath>
@@ -1541,9 +1541,9 @@
       <Documents>
         <Doc>
           <Name>.\External_interrupts_level_trigger.c</Name>
-          <ColumnNumber>19</ColumnNumber>
+          <ColumnNumber>17</ColumnNumber>
           <TopLine>1</TopLine>
-          <CurrentLine>15</CurrentLine>
+          <CurrentLine>1</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>

@@ -30,12 +30,13 @@ uchar GlobalNum	= 0;
 
 uchar code GlobalDisplayTable[] = 
 	{0x3f,0x06,0x5b,0x4f,0x66,
-	 0x6d,0x7d,0x07,0x7f,0x6f};	/* 段选，选择要显示的数字 */
+	 0x6d,0x7d,0x07,0x7f,0x6f};	/* 段选，选择要显示的数字0-9 */
+
 
 /*************************************** 函数声明 ****************************************/
-void timerInterruptInit(void);
-void digitalTubeDisplay(uchar num);
-void delayMs(uint xms);
+static void timerInterruptInit(void);
+static void digitalTubeDisplay(uchar num);
+static void delayMs(uint xms);
 
 /*
  *****************************************************************************************
@@ -51,7 +52,7 @@ void main(void)
     timerInterruptInit();	//定时器中断初始化
     while(1)
     {
-		digitalTubeDisplay(GlobalNum);
+  		digitalTubeDisplay(GlobalNum);
     }
 }
 
@@ -153,7 +154,9 @@ void Timer0InterruptHandler() interrupt 1
 
 	   GlobalNum ++;
 	   if (GlobalNum >= 60)
+	   {
 	       GlobalNum = 0;
+	   }
    }
 }
 
