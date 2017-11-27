@@ -1,13 +1,15 @@
-#ifndef DIGITAL_TUBE_H__
-#define DIGITAL_TUBE_H__
+#ifndef KEYBOARD_H__
+#define KEYBOARD_H__
 
 /************************************* 包含头文件 ***************************************/
 #include "config.h"
+
+
 /**************************************** 宏定义 *****************************************/
 
 
 /*************************************** 函数声明 ****************************************/
-void digitalTubeDisplayTime(u8 shi1,shi0,fen1,fen0,miao1,miao0);
+void keyscan(void);
 
 
 #endif

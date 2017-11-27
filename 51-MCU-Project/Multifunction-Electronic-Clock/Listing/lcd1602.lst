@@ -1,0 +1,104 @@
+C51 COMPILER V9.01   LCD1602                                                               11/27/2017 15:21:21 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE LCD1602
+OBJECT MODULE PLACED IN ..\Output\lcd1602.obj
+COMPILER INVOKED BY: D:\Keil_v4\C51\BIN\C51.EXE ..\Hardware\lcd1602\lcd1602.c BROWSE INCDIR(..\Hardware\digital_tube;..\
+                    -User\timer;..\User\uart;..\Hardware\beep;..\Hardware\dht11;..\Hardware\digital_tube;..\Hardware\ds1302;..\Hardware\keybo
+                    -ard;..\Hardware\lcd12864;..\Hardware\lcd1602;..\Hardware\led;..\Hardware\pm2_5;..\Hardware\uart_tft;..\Lib\delay;..\User
+                    -) DEBUG OBJECTEXTEND PRINT(..\Listing\lcd1602.lst) OBJECT(..\Output\lcd1602.obj)
+
+line level    source
+
+   1          /*
+   2           *****************************************************************************************
+   3           *      文 件 名 称:lcd1602.c
+   4           *  创 建 平 台：Keil uVision4
+   5           *      创 建 作 者：miki
+   6           *  文 件 功 能：LCD1602显示屏配置
+   7           *  github 地 址：
+   8           *      创 建 日 期：2017-11-27
+   9           *****************************************************************************************
+  10           */
+  11          
+  12          /************************************* 包含头文件 ***************************************/
+  13          #include "lcd1602.h"
+  14          #include "delay.h"
+  15          
+  16          /************************************* 全局变量定义 **************************************/
+  17          u8 code tab1[]={"2014-  -   THU"};
+  18          u8 code tab2[]={"  :  :  "};
+  19          
+  20          /*************************************** IO口定义 ****************************************/
+  21          sbit wr=P3^6;
+  22          sbit rs=P3^5;
+  23          sbit en=P3^4;
+  24          
+  25          /********************************** 扩展全局变量定义 ************************************/
+  26          
+  27          
+  28          /************************************ 局部函数定义 **************************************/
+  29          
+  30          void lcd1602_init(void)//液晶初始化函数
+  31          { 
+  32   1              u8 a;      
+  33   1              wr=0;
+  34   1              write_1602com(0x38);//设置液晶工作模式
+  35   1              write_1602com(0x0c);//开显示不显示光标
+  36   1              write_1602com(0x06);//整屏不移动，指针加一
+  37   1              write_1602com(0x01);
+  38   1              write_1602com(yh+2);//字符写入的位置
+  39   1              for(a=0;a<14;a++)
+  40   1              {
+  41   2              write_1602dat(tab1[a]);
+  42   2              //delay(3);
+  43   2              }
+  44   1              write_1602com(er+4);
+  45   1              for(a=0;a<8;a++)
+  46   1              {
+  47   2              write_1602dat(tab2[a]);
+  48   2              //delay(3);
+  49   2              }
+  50   1      
+  51   1      }
+  52          
+C51 COMPILER V9.01   LCD1602                                                               11/27/2017 15:21:21 PAGE 2   
+
+  53          
+  54          /******************液晶写入************************/
+  55          void write_1602com(u8 com)//液晶写入指令函数
+  56          {
+  57   1              rs=0;//置为写入命令
+  58   1              P0=com;//送入数据
+  59   1              delay1Ms(1);
+  60   1              en=1;//拉高使能端
+  61   1              delay1Ms(1);
+  62   1              en=0;//完成高脉冲
+  63   1      }
+  64          
+  65          
+  66          void write_1602dat(u8 dat)
+  67          {
+  68   1              rs=1;//置为写入数据
+  69   1              P0=dat;//送入数据
+  70   1              delay1Ms(1);
+  71   1              en=1;
+  72   1              delay1Ms(1);
+  73   1              en=0;
+  74   1      }
+  75          
+  76          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    123    ----
+   CONSTANT SIZE    =     24    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

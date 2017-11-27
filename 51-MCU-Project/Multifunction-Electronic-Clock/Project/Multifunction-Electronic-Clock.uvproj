@@ -294,7 +294,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\User;..\Lib;..\Hardware\digital_tube</IncludePath>
+              <IncludePath>..\Hardware\digital_tube;..\User\timer;..\User\uart;..\Hardware\beep;..\Hardware\dht11;..\Hardware\digital_tube;..\Hardware\ds1302;..\Hardware\keyboard;..\Hardware\lcd12864;..\Hardware\lcd1602;..\Hardware\led;..\Hardware\pm2_5;..\Hardware\uart_tft;..\Lib\delay;..\User</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -347,11 +347,6 @@
           <GroupName>User</GroupName>
           <Files>
             <File>
-              <FileName>STARTUP.A51</FileName>
-              <FileType>2</FileType>
-              <FilePath>.\STARTUP.A51</FilePath>
-            </File>
-            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\User\main.c</FilePath>
@@ -359,12 +354,12 @@
             <File>
               <FileName>timer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\User\timer.c</FilePath>
+              <FilePath>..\User\timer\timer.c</FilePath>
             </File>
             <File>
               <FileName>uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\User\uart.c</FilePath>
+              <FilePath>..\User\uart\uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -374,7 +369,7 @@
             <File>
               <FileName>delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Lib\delay.c</FilePath>
+              <FilePath>..\Lib\delay\delay.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -385,6 +380,51 @@
               <FileName>digital_tube.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Hardware\digital_tube\digital_tube.c</FilePath>
+            </File>
+            <File>
+              <FileName>ds1302.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\ds1302\ds1302.c</FilePath>
+            </File>
+            <File>
+              <FileName>keyboard.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\keyboard\keyboard.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd1602.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\lcd1602\lcd1602.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart_tft.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\uart_tft\uart_tft.c</FilePath>
+            </File>
+            <File>
+              <FileName>beep.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\beep\beep.c</FilePath>
+            </File>
+            <File>
+              <FileName>dht11.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\dht11\dht11.c</FilePath>
+            </File>
+            <File>
+              <FileName>pm2_5.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\pm2_5\pm2_5.c</FilePath>
+            </File>
+            <File>
+              <FileName>led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\led\led.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd12864.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\lcd12864\lcd12864.c</FilePath>
             </File>
           </Files>
         </Group>

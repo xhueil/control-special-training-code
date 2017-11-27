@@ -1,0 +1,301 @@
+C51 COMPILER V9.01   KEYBOARD                                                              11/27/2017 15:21:57 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE KEYBOARD
+OBJECT MODULE PLACED IN ..\Output\keyboard.obj
+COMPILER INVOKED BY: D:\Keil_v4\C51\BIN\C51.EXE ..\Hardware\keyboard\keyboard.c BROWSE INCDIR(..\Hardware\digital_tube;.
+                    -.\User\timer;..\User\uart;..\Hardware\beep;..\Hardware\dht11;..\Hardware\digital_tube;..\Hardware\ds1302;..\Hardware\key
+                    -board;..\Hardware\lcd12864;..\Hardware\lcd1602;..\Hardware\led;..\Hardware\pm2_5;..\Hardware\uart_tft;..\Lib\delay;..\Us
+                    -er) DEBUG OBJECTEXTEND PRINT(..\Listing\keyboard.lst) OBJECT(..\Output\keyboard.obj)
+
+line level    source
+
+   1          /*
+   2           *****************************************************************************************
+   3           *      文 件 名 称:keyboard.c
+   4           *  创 建 平 台：Keil uVision4
+   5           *      创 建 作 者：miki
+   6           *  文 件 功 能：独立按键配置
+   7           *  github 地 址：
+   8           *      创 建 日 期：2017-11-27
+   9           *****************************************************************************************
+  10           */
+  11          
+  12          /************************************* 包含头文件 ***************************************/
+  13          #include "keyboard.h"
+  14          #include "delay.h"
+  15          #include "lcd1602.h"
+  16          #include "ds1302.h"
+  17          
+  18          /************************************* 全局变量定义 **************************************/
+  19          
+  20          /*************************************** IO口定义 ****************************************/
+  21          sbit key=P3^7;
+  22          sbit key1=P3^0;
+  23          sbit key2=P3^1;
+  24          sbit key3=P3^2;
+  25          
+  26          /********************************** 扩展全局变量定义 ************************************/
+  27          
+  28          
+  29          /************************************ 局部函数定义 **************************************/
+  30          
+  31          
+  32          
+  33          void keyscan(void)
+  34          {
+  35   1              u8 key1n,temp;
+  36   1              key=0;
+  37   1              if(key1==0)//key1为功能键
+  38   1              {
+  39   2                      delay1Ms(5);
+  40   2                      if(key1==0)
+  41   2                      {
+  42   3                              while(!key1);
+  43   3                              key1n++;
+  44   3                              if(key1n==9)
+  45   3                              key1n=1;
+  46   3                              switch(key1n)
+  47   3                              {
+  48   4                                      case 1: 
+  49   4                                              TR0=0;//关闭定时器
+  50   4                                              //TR1=0;
+  51   4                                              write_1602com(er+0x0b);//写入光标位置
+  52   4                                              write_1602com(0x0f);//设置光标为闪烁
+C51 COMPILER V9.01   KEYBOARD                                                              11/27/2017 15:21:57 PAGE 2   
+
+  53   4                                              temp=(miao)/10*16+(miao)%10;
+  54   4                                              write_1302(0x8e,0x00);
+  55   4                                              write_1302(0x80,0x80|temp);//miao
+  56   4                                              write_1302(0x8e,0x80);
+  57   4                                              break;
+  58   4      
+  59   4                                      case 2:  
+  60   4                                              write_1602com(er+8);//fen
+  61   4                                              break;
+  62   4      
+  63   4                                      case 3: 
+  64   4                                              write_1602com(er+5);//shi
+  65   4                                              break;
+  66   4      
+  67   4                                      case 4: 
+  68   4                                              write_1602com(yh+0x0f);//week
+  69   4                                              break;
+  70   4      
+  71   4                                      case 5: 
+  72   4                                              write_1602com(yh+0x0b);//ri
+  73   4                                              break;
+  74   4      
+  75   4                                      case 6: 
+  76   4                                              write_1602com(yh+0x08);//yue
+  77   4                                              break;
+  78   4      
+  79   4                                      case 7: 
+  80   4                                              write_1602com(yh+0x05);//nian
+  81   4                                              break;
+  82   4      
+  83   4                                      case 8:
+  84   4                                              write_1602com(0x0c);//设置光标不闪烁
+  85   4                                              TR0=1;//打开定时器
+  86   4                                              temp=(miao)/10*16+(miao)%10;
+  87   4                                              write_1302(0x8e,0x00);
+  88   4                                              write_1302(0x80,0x00|temp);//miao
+  89   4                                              write_1302(0x8e,0x80);
+  90   4                                              break;
+  91   4                              }
+  92   3                      }
+  93   2              }
+  94   1      
+  95   1              if(key1n!=0)//当key1按下以下。再按以下键才有效
+  96   1              {
+  97   2                      
+  98   2                      if(key2==0)  //上调键
+  99   2                      {
+ 100   3                              delay1Ms(5);
+ 101   3                              if(key2==0)
+ 102   3                              {
+ 103   4                                      while(!key2);
+ 104   4                                      switch(key1n)
+ 105   4                                      {
+ 106   5                                              case 1:
+ 107   5                                                      miao++;
+ 108   5                                                      if(miao==60)
+ 109   5                                                      miao=0;
+ 110   5                                                      write_sfm(0x0a,miao);//写入新的秒数
+ 111   5                                                      temp=(miao)/10*16+(miao)%10;
+ 112   5                                                      write_1302(0x8e,0x00);
+ 113   5                                                      write_1302(0x80,0x80|temp);
+ 114   5                                                      write_1302(0x8e,0x80);
+C51 COMPILER V9.01   KEYBOARD                                                              11/27/2017 15:21:57 PAGE 3   
+
+ 115   5                                                      write_1602com(er+0x0b);//因为设置液晶的模式是写入数据后，指针自动加一，在这里是写回原来的位置
+ 116   5                                                      //write_1602com(0x0b);
+ 117   5                                                      break;
+ 118   5      
+ 119   5                                              case 2:
+ 120   5                                                      fen++;
+ 121   5                                                      if(fen==60)
+ 122   5                                                      fen=0;
+ 123   5                                                      write_sfm(0x07,fen);
+ 124   5                                                      temp=(fen)/10*16+(fen)%10;
+ 125   5                                                      write_1302(0x8e,0x00);
+ 126   5                                                      write_1302(0x82,temp);
+ 127   5                                                      write_1302(0x8e,0x80);
+ 128   5                                                      write_1602com(er+8);
+ 129   5                                                      break;
+ 130   5      
+ 131   5                                              case 3:
+ 132   5                                                      shi++;
+ 133   5                                                      if(shi==24)
+ 134   5                                                      shi=0;
+ 135   5                                                      write_sfm(4,shi);
+ 136   5                                                      temp=(shi)/10*16+(shi)%10;
+ 137   5                                                      write_1302(0x8e,0x00);
+ 138   5                                                      write_1302(0x84,temp);
+ 139   5                                                      write_1302(0x8e,0x80);
+ 140   5                                                      write_1602com(er+5);
+ 141   5                                                      break;
+ 142   5      
+ 143   5                                              case 4:
+ 144   5                                                      week++;
+ 145   5                                                      if(week==8)
+ 146   5                                                      week=0;
+ 147   5                                                      write_week(week);
+ 148   5                                                      write_1602com(yh+0x0f);
+ 149   5                                                      break;
+ 150   5      
+ 151   5                                              case 5:
+ 152   5                                                      ri++;
+ 153   5                                                      if(ri==31)
+ 154   5                                                      ri=0;
+ 155   5                                                      write_nyr(10,ri);
+ 156   5                                                      temp=(ri)/10*16+(ri)%10;
+ 157   5                                                      write_1302(0x8e,0x00);
+ 158   5                                                      write_1302(0x86,temp);
+ 159   5                                                      write_1302(0x8e,0x80);
+ 160   5                                                      write_1602com(yh+11);
+ 161   5                                                      break;
+ 162   5      
+ 163   5                                              case 6:
+ 164   5                                                      yue++;
+ 165   5                                                      if(yue==13)
+ 166   5                                                      yue=0;
+ 167   5                                                      write_nyr(7,yue);
+ 168   5                                                      temp=(yue)/10*16+(yue)%10;
+ 169   5                                                      write_1302(0x8e,0x00);
+ 170   5                                                      write_1302(0x88,temp);
+ 171   5                                                      write_1302(0x8e,0x80);
+ 172   5                                                      write_1602com(yh+8);
+ 173   5                                                      break;
+ 174   5      
+ 175   5                                              case 7:
+ 176   5                                                      nian++;
+C51 COMPILER V9.01   KEYBOARD                                                              11/27/2017 15:21:57 PAGE 4   
+
+ 177   5                                                      if(nian==100)
+ 178   5                                                      nian=0;
+ 179   5                                                      write_nyr(4,nian);
+ 180   5                                                      write_1602com(yh+5);
+ 181   5                                                      break;
+ 182   5                                      }
+ 183   4                              }
+ 184   3                      }
+ 185   2                      if(key3==0)
+ 186   2                      {
+ 187   3                              delay1Ms(5);
+ 188   3                              if(key3==0)
+ 189   3                              {
+ 190   4                                      while(!key3);
+ 191   4                                      switch(key1n)
+ 192   4                                      {
+ 193   5                                              case 1:
+ 194   5                                                      miao--;
+ 195   5                                                      if(miao==-1)
+ 196   5                                                              miao=59;
+ 197   5                                                      write_sfm(0x0a,miao);//写入新的秒数
+ 198   5                                                      write_1602com(er+0x0b);//因为设置液晶的模式是写入数据后，指针自动加一，在这里是写回原来的位置
+ 199   5                                                      //write_1602com(0x0b);
+ 200   5                                                      break;
+ 201   5      
+ 202   5                                              case 2:
+ 203   5                                                      fen--;
+ 204   5                                                      if(fen==-1)
+ 205   5                                                              fen=59;
+ 206   5                                                      write_sfm(7,fen);
+ 207   5                                                      temp=(fen)/10*16+(fen)%10;
+ 208   5                                                      write_1302(0x8e,0x00);
+ 209   5                                                      write_1302(0x82,temp);
+ 210   5                                                      write_1302(0x8e,0x80);
+ 211   5                                                      write_1602com(er+8);
+ 212   5                                                      break;
+ 213   5                                              
+ 214   5                                              case 3:
+ 215   5                                                      shi--;
+ 216   5                                                      if(shi==-1)
+ 217   5                                                              shi=23;
+ 218   5                                                      write_sfm(4,shi);
+ 219   5                                                      temp=(shi)/10*16+(shi)%10;
+ 220   5                                                      write_1302(0x8e,0x00);
+ 221   5                                                      write_1302(0x84,temp);
+ 222   5                                                      write_1302(0x8e,0x80);
+ 223   5                                                      write_1602com(er+5);
+ 224   5                                                      break;
+ 225   5                                              case 4:
+ 226   5                                                      week--;
+ 227   5                                                      if(week==-1)
+ 228   5                                                              week=7;
+ 229   5                                                      write_week(week);
+ 230   5                                                      write_1602com(yh+0x0f);
+ 231   5                                                      break;
+ 232   5                                              case 5:
+ 233   5                                                      ri--;
+ 234   5                                                      if(ri==-1)
+ 235   5                                                              ri=30;
+ 236   5                                                      write_nyr(10,ri);
+ 237   5                                                      temp=(ri)/10*16+(ri)%10;
+ 238   5                                                      write_1302(0x8e,0x00);
+C51 COMPILER V9.01   KEYBOARD                                                              11/27/2017 15:21:57 PAGE 5   
+
+ 239   5                                                      write_1302(0x86,temp);
+ 240   5                                                      write_1302(0x8e,0x80);
+ 241   5                                                      write_1602com(yh+11);
+ 242   5                                                      break;
+ 243   5                                              case 6:
+ 244   5                                                      yue--;
+ 245   5                                                      if(yue==-1)
+ 246   5                                                              yue=12;
+ 247   5                                                      write_nyr(7,yue);
+ 248   5                                                      temp=(yue)/10*16+(yue)%10;
+ 249   5                                                      write_1302(0x8e,0x00);
+ 250   5                                                      write_1302(0x88,temp);
+ 251   5                                                      write_1302(0x8e,0x80);
+ 252   5                                                      write_1602com(yh+8);
+ 253   5                                                      break;  
+ 254   5                                              case 7:
+ 255   5                                                      nian--;
+ 256   5                                                      if(nian==-1)
+ 257   5                                                              nian=99;
+ 258   5                                                      write_nyr(4,nian);
+ 259   5                                                      write_1602com(yh+5);
+ 260   5                                                      break;                  
+ 261   5                                      }
+ 262   4                              }
+ 263   3                      }
+ 264   2              }
+ 265   1      }
+ 266          
+ 267          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1031    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

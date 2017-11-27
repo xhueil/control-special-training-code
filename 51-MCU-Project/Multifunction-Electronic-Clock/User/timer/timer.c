@@ -11,6 +11,7 @@
 
 /************************************* 包含头文件 ***************************************/
 #include "timer.h"
+#include "ds1302.h"
 
 /************************************* 全局变量定义 **************************************/
 u8 GlobalInterruptAdd;
@@ -26,13 +27,12 @@ u8 GlobalInterruptAdd;
  */
 void timer0InterruptInit(void)
 {	
-	TMOD = 0x01;
-	TH0 = (65536-46080)/256;
-	TL0 = (65536-46080)%256;
+	TMOD = 0x11;
+	TH0 = 0;
+	TL0 = 0;
 	EA = 1;
 	ET0 = 1;
-	TCON = 0x10;
-	 //TR0=1;
+	TR0=1;
 }
 
 /*
@@ -46,8 +46,20 @@ void timer0InterruptInit(void)
  */
 void timer0InterruptHandler() interrupt 1
 {
-	TH0=(65536-46080)/256;
-	TL0=(65536-46080)%256;
-	GlobalInterruptAdd ++;	
+	miao = BCD_Decimal(read_1302(0x81));
+	fen = BCD_Decimal(read_1302(0x83));
+	shi  = BCD_Decimal(read_1302(0x85));
+	ri  = BCD_Decimal(read_1302(0x87));
+	yue = BCD_Decimal(read_1302(0x89));
+	nian=BCD_Decimal(read_1302(0x8d));
+	week=BCD_Decimal(read_1302(0x8b));
+
+	write_sfm(10,miao);
+	write_sfm(7,fen);
+	write_sfm(4,shi);
+	
+	write_nyr(10,ri);
+    write_nyr(7,yue);
+
 }
 
